@@ -30,5 +30,4 @@ Earth Engine (GEE) a través de la librería rgee en R.
 
 #### **ÍNDICE DE CONTENIDOS**
 
--   [**1.** Obtención de imágenes con `rgee` en usando el software
-    R](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/1_Imagenes_rgee.md)
+-   1.  Obtención de imágenes con `rgee` en usando el software R
