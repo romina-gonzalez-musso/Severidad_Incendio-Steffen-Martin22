@@ -1,0 +1,39 @@
+---
+title: "Relevamiento satelital de severidad del Incendio Complejo Lago Martin 2021-22"
+subtitle: "rgee para la obtención de las imágenes y los índices"
+#author: "Romina Gonzalez Musso"
+# date: "8/4/2022"
+always_allow_html: true
+output:
+  github_document:
+    md_extension: +gfm_auto_identifiers
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<a id="intro"></a>
+
+## **PRESENTACION**{#intro}
+
+```{r, echo=FALSE, out.width="30%", fig.cap="", fig.align="left"}
+
+knitr::include_graphics("_images/0_Logo.jpg")
+
+```
+<br>
+Servicio Técnico de Alto Nivel (STAN)
+
+
+**Relevamiento satelital del incendio forestal complejo Lagos Martin y Steffen**
+
+Autores: Thomas Kitzberger, Juan Gowda, Juan Paritsis, Romina Gonzalez Musso
+
+Este repositorio corresponde al código anexo para determinar el índice de severidad de incendios y cálculos de superficies usando Google Earth Engine (GEE) a través de la librería rgee en R. 
+
+Actualización: mayo 2022
+
+<a id="intro2"></a>
+
