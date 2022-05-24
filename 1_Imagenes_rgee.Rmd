@@ -49,7 +49,7 @@ leaflet(shape) %>%
 ```
 
 ```{r, echo=FALSE, out.width="40%", fig.cap=""}
-knitr::include_graphics("_images/1_Area.png")
+knitr::include_graphics("_mds/_figures/1_Area.png")
 ```
 
 
