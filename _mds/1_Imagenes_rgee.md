@@ -3,7 +3,7 @@
 
 ### **1a. Instalar rgee**
 
-<img src="_images/1_Rgee_logo.png" width="08%" />
+<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_Rgee_logo.png?raw=true" width="12%" />
 
 **rgee** es una librería que permite llamar a la API de Google Earth
 Entine usando R (Aybar et al. 2020).
@@ -43,7 +43,7 @@ leaflet(shape) %>%
   addPolygons(color = "red", weight = 1, opacity = 1.0)
 ```
 
-<img src="_images/1_Area.png" width="40%" />
+<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_Area.png?raw=true" width="50%" />
 
 Finalmente, convertimos el objeto `sf` a objeto rgee:
 
@@ -126,9 +126,9 @@ Map$addLayer(PostImage, viz_swir, 'Post-fuego SWIR')+
 Map$addLayer(PostImage, viz_true_color, 'Post-fuego RGB')
 ```
 
-<img src="_images/1_True_color.gif" width="50%" />
+<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_True_color.gif?raw=true" width="50%" />
 
-<img src="_images/2_swir.gif" width="50%" />
+<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_swir.gif?raw=true" width="50%" />
 
 ### **1e. Descargar las imágenes a Google Drive**
 

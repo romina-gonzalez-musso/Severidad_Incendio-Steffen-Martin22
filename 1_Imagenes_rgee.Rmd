@@ -15,7 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ### **1a. Instalar rgee**{#rgee}
 
 
-<img src="_images/1_Rgee_logo.png" width="100" /> ![]()
+```{r, echo=FALSE, out.width="12%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_Rgee_logo.png?raw=true")
+```
 
 
 **rgee** es una librería que permite llamar a la API de Google Earth Entine usando R (Aybar et al. 2020). 
@@ -48,7 +50,11 @@ leaflet(shape) %>%
   addPolygons(color = "red", weight = 1, opacity = 1.0)
 ```
 
-<img src="_images/1_Area.png" width="300" /> ![]()
+
+```{r, echo=FALSE, out.width="50%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_Area.png?raw=true")
+```
+
 
 Finalmente, convertimos el objeto `sf` a objeto rgee:
 
@@ -121,11 +127,14 @@ Map$addLayer(PostImage, viz_true_color, 'Post-fuego RGB')
 ```
 
 
-<img src="_images/1_True_color.gif" width="400" /> ![]()
+```{r, echo=FALSE, out.width="50%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_True_color.gif?raw=true")
+```
 
 
-<img src="_images/1_swir.gif" width="400" /> ![]()
-
+```{r, echo=FALSE, out.width="50%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_swir.gif?raw=true")
+```
 
 ### **1e. Descargar las imágenes a Google Drive**
 
