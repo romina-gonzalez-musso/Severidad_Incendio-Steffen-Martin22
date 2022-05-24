@@ -181,7 +181,7 @@ knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_Ince
 El índice NBR se calcula a partir de la relación entre las bandas NIR y SWIR:
 
 ```{r, echo=FALSE, out.width="20%", fig.cap=""}
-knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_NBR_formula.jpgf?raw=true")
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_NBR_formula.jpg?raw=true")
 ```
 
 ```{r}

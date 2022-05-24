@@ -177,7 +177,7 @@ PostImage <- PostImage$mask(water_mask)$mask(veg_mask)
 El índice NBR se calcula a partir de la relación entre las bandas NIR y
 SWIR:
 
-<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_NBR_formula.jpgf?raw=true" width="20%" />
+<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_NBR_formula.jpg?raw=true" width="20%" />
 
 ``` r
 preNBR <- PreImage$normalizedDifference(c("B8", "B12"))
