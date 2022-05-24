@@ -33,4 +33,4 @@ usando Google Earth Engine (GEE) a través de la librería rgee en R.
     Incendios)](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/1_Imagenes_rgee.md)
 
 -   [**2.** Superficies afectadas por categoría de severidad
-    USGS](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/2_Categorias.md)
+    USGS](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/2_NBR.md)
