@@ -130,13 +130,153 @@ Map$addLayer(PostImage, viz_true_color, 'Post-fuego RGB')
 
 <img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_swir.gif?raw=true" width="50%" />
 
-### **1e. Descargar las imágenes a Google Drive**
+### **1e. Opcional: aplicar máscaras de agua y vegetación**
+
+Se pueden aplicar máscaras para eliminar las áreas sin vegetación y los
+lagos, de manera que los índices sean aplicados solo a las zonas de
+bosque.
+
+En este caso la máscara de agua se generó a partir del producto
+`GlobalSurfaceWater`:
+
+``` r
+# Máscara de agua con Global Surface Water
+gsw <- ee$Image("JRC/GSW1_2/GlobalSurfaceWater")
+water_mask <- gsw$select('seasonality')$lt(11)$unmask(1)$clip(shape_ee)
+```
+
+La máscara de vegetación de puede generar usando el `GlobalForestWatch`
+pero en este caso se utilizó un umbral de NDVI de la imagen Pre-incendio
+para eliminar los afloramientos rocosos de las cumnbres.
+
+``` r
+getIndexes <- function(image) {
+  ndwi <- image$normalizedDifference(c("B3", "B5"))$rename('NDWI')
+  ndvi <- image$normalizedDifference(c("B8", "B4"))$rename('NDVI')
+  return(image$addBands(c(ndvi, ndwi)))
+}
+
+indices <- getIndexes(PreImage)
+
+# Máscaras de vegetación con NDVI
+veg_mask <- indices$select('NDVI')$gte(0.15)$unmask(1)$clip(shape_ee)
+```
+
+Se aplican las máscaras a las imágenes:
+
+``` r
+## Aplicar máscaras 
+PreImage <- PreImage$mask(water_mask)$mask(veg_mask)
+PostImage <- PostImage$mask(water_mask)$mask(veg_mask)
+```
+
+<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_Masks.gif?raw=true" width="50%" />
+
+### **1f. Cáculo de índice NBR (Índice Normalizado de Área Quemada)**
+
+El índice NBR se calcula a partir de la relación entre las bandas NIR y
+SWIR:
+
+<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_NBR_formula.jpgf?raw=true" width="20%" />
+
+``` r
+preNBR <- PreImage$normalizedDifference(c("B8", "B12"))
+postNBR <- PostImage$normalizedDifference(c("B8", "B12"))
+```
+
+La diferencia entre ambos NBR permite estimar **la severidad del
+incendio**.
+
+``` r
+# dNBR
+dNBR_unscaled <-preNBR$subtract(postNBR)
+```
+
+Teniendo en cuenta los cambios fenológicos entre ambas fechas, se
+calculó el dNRB `offset` (Parks et al. 2014) y luego se escalaron los
+resultados de acuerdo a los valores propuestos por USGS.
+
+``` r
+# dNRB offset
+offset <- 0.0277  # Calculado específicamente para este caso
+dNBR_unscaled <- dNBR_unscaled$subtract(offset)
+
+# Escalado a los estándars USGS
+dNBR_scaled <- dNBR_unscaled$multiply(1000)
+```
+
+Ahora configuramos la **visualización**
+
+``` r
+viz_grayscale <- list(palette = c("White", "Black"), 
+                      min = -1000,
+                      max = 1000)
+
+Map$addLayer(PostImage, viz_true_color, 'Post-fuego RGB') +
+Map$addLayer(dNBR_scaled, viz_grayscale, 'dNBR GREY')
+```
+
+<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_dNBR.gif?raw=true" width="50%" />
+
+### **1.g. Categorías de severidad USGS**
+
+La USGS propone una una clasificación de severidad para interpretar los
+resultados del índice:
+
+<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_classes.png?raw=true" width="75%" />
+
+Fuente: <https://un-spider.org/es/node/10959>
+
+Se determina una paleta de colores (`sld_intervals`) para clasificar el
+dNBR en función a la tabla anterior:
+
+``` r
+sld_intervals <- paste0(
+  "<RasterSymbolizer>",
+  '<ColorMap type="intervals" extended="false" >',
+  '<ColorMapEntry color="#ffffff" quantity="-500" label="-500"  />',
+  '<ColorMapEntry color="#7a8737" quantity="-250" label="-250"  />',
+  '<ColorMapEntry color="#acbe4d" quantity="-100" label="-100" />',
+  '<ColorMapEntry color="#0ae042" quantity="100" label="100" />',
+  '<ColorMapEntry color="#fff70b" quantity="270" label="270" />',
+  '<ColorMapEntry color="#ffaf38" quantity="440" label="440" />',
+  '<ColorMapEntry color="#ff641b" quantity="660" label="660" />',
+  '<ColorMapEntry color="#a41fd6" quantity="2000" label="2000" />',
+  "</ColorMap>",
+  "</RasterSymbolizer>"
+)
+```
+
+Visualizar los resultados en función a las categorías USGS:
+
+``` r
+Map$addLayer(PostImage, viz_true_color, 'Post-fuego RGB') +
+Map$addLayer(dNBR_scaled$sldStyle(sld_intervals), {}, 'dNBR classified')
+```
+
+<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_USGS.gif?raw=true" width="50%" />
+
+### **1h. Descargar las imágenes a Google Drive**
 
 Se pueden exportar los productos a Google Drive para luego trabajar en
 forma local en cualquier softare GIS.
 
 Primero se definen los parámetros del objeto `task` a descargar y luego
 con `task$start` comienza la descarga.
+
+Exportar el raster correspondiente al dNBR:
+
+``` r
+task <- ee$batch$Export$image$toDrive(
+  image = dNBR_scaled,                  # Seleccionar qué producto se va a exportar
+  description = "dNBR_scaled_masked",   # El nombre del archivo
+  folder= "GEE_export",                 # La carpeta en GD donde se va a guardar
+  scale = 20,                           # La resolución 
+  crs = 'EPSG:4326',                    # El sistema de coordenadas
+  region = shape_ee)                    # Recortar al área de estudio
+```
+
+Exportar las imágenes Sentinel 2:
 
 ``` r
 # Task para exportar la imagen pre-incendio

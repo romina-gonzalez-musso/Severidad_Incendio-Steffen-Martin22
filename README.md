@@ -28,5 +28,9 @@ usando Google Earth Engine (GEE) a través de la librería rgee en R.
 
 #### **ÍNDICE DE CONTENIDOS**
 
--   [**1.** Obtención de imágenes con `rgee` usando el software
-    R](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/1_Imagenes_rgee.md)
+-   [**1.** Obtención de imágenes con `rgee` y cáculo de NBR (Índice de
+    Severidad de
+    Incendios)](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/1_Imagenes_rgee.md)
+
+-   [**2.** Superficies afectadas por categoría de severidad
+    USGS](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/2_Categorias.md)
