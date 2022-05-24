@@ -2,13 +2,11 @@ Relevamiento satelital de severidad del Incendio Complejo Lago Martin
 2021-22
 ================
 
-<br>
 <img src="_images/0_Logo.jpg" width="30%" style="display: block; margin: auto auto auto 0;" />
-<br>
 
-#### Servicio Técnico de Alto Nivel (STAN)
+#### **Servicio Técnico de Alto Nivel (STAN)**
 
-**INIBIOMA-CONICET/UNComahue**
+**INIBIOMA-CONICET/ UNComahue**
 
 -   Thomas Kitzberger
 -   Juan Paritsis
@@ -24,11 +22,11 @@ Relevamiento satelital de severidad del Incendio Complejo Lago Martin
 
 ------------------------------------------------------------------------
 
-Este repositorio contiene el material accesorio para determinar el
-índice de severidad de incendios y cálculos de superficies usando Google
-Earth Engine (GEE) a través de la librería rgee en R.
+Este repositorio contiene el material accesorio y los códigos para
+determinar el índice de severidad de incendios y cálculos de superficies
+usando Google Earth Engine (GEE) a través de la librería rgee en R.
 
 #### **ÍNDICE DE CONTENIDOS**
 
--   [**1.** Obtención de imágenes con `rgee` en usando el software
+-   [**1.** Obtención de imágenes con `rgee` usando el software
     R](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/1_Imagenes_rgee.md)
