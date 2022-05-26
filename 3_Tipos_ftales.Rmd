@@ -1,0 +1,73 @@
+---
+# title: "Relevamiento satelital de severidad del Incendio Complejo Lago Martin 2021-22"
+#author: "Romina Gonzalez Musso"
+# date: "8/4/2022"
+always_allow_html: true
+output:
+  github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## **3. ESTIMACIÓN DE SUPERFICIES AFECTADAS POR TIPO DE BOSQUE**
+
+### **3a. Importar las librerías e inputs necesarios**
+
+En esta sección se utilizará la [Clasificación de Tipos Forestales y Cobertura del Suelo de la Región Bosque Andino Patagónico (CIEFAP, MAyDS 2016)](https://www.argentina.gob.ar/sites/default/files/informe_final_ccs_bap_20160712.pdf), Nivel 2 de la Leyenda. También se utilizará el archivo raster correspondiente al dNBR generado en las secciones anteriores. 
+
+Indicar el **directorio local** donde se encuentran ambos archivos:
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+ 
+dir_ciefap <-"_gis_shapes/clasif_ciefap_incendio.shp"
+dir_nbr_class <- "_gis_rasters/nbr_class_USGS.tiff"
+
+```
+*Observación: en este caso la cobertura vectorial del Tipos Forestales ya fue recortada al área del incendio.*
+
+Se utilizarán también 3 **funciones generadas específicamente** para extraer las superficies afectadas para cada tipo forestal y luego graficar. 
+
+Las 3 funciones, `shapeUSGSxTipoFtal`, `supUSGSxTipoFtal` y `plotUSGS` se encuentran en el repositorio. 
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+ 
+# Llamar a las funciones
+source("_r_functions/USGSxTipoFtal_funciones.R")
+
+```
+
+
+Finalmente, cargar las **librerías** necesarias:
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+library(terra)
+library(sf)
+library(dplyr)
+library(raster)
+```
+
+
+### **3b. Bosques de Coihue**
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+# Definir el tipo forestal
+x <- "Co"
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = TRUE}
+# Aplicar la función que extrae los polígonos de Coihue
+Co <- shapeUSGSxTipoFtal(x)
+# Función para calcular la superficie por clase de severidad
+supUSGSxTipoFtal(Co)
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE, eval=FALSE}
+# Graficar
+plotUSGS(Co)
+```
+
+```{r, echo=FALSE, out.width="90%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Co.png?raw=true")
+```

@@ -29,7 +29,7 @@ En primer lugar se importará el **archivo raster dNBR** que fue generado con `r
 
 ```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
 # Importar el raster 
-nbr_wgs84 <- rast(paste0("_rasters/dNBR_scaled_masked.tif")) 
+nbr_wgs84 <- rast(paste0("_gis_rasters/dNBR_scaled_masked.tif")) 
 
 # Proyectar a un sistema de coordenadas planas
 nbr_posgar1 <- terra::project(nbr_wgs84, "EPSG:22181")
@@ -101,7 +101,7 @@ Se puede **exportar el polígono** en formato shape para trabajar en forma local
 
 ```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE, eval=FALSE}
 
-st_write(perimeter_wgs84, "poligono_incendio_wgs84.shp", append = FALSE)
+st_write(perimeter_wgs84, "_gis_shapes/poligono_incendio_wgs84.shp", append = FALSE)
 
 ```
 
@@ -173,7 +173,7 @@ my_col=c("#ffffff",      # -1 NA Values
 
 ```
 
-Se clasifica el raster y grafica el raster dNBR:
+Se clasifica el raster dNBR en categorías y luego se grafica:
 
 ```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
 
@@ -229,7 +229,7 @@ Se puede **exportar el raster clasificado** en formato `.tiff` para trabajar en 
 
 ```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE, eval=FALSE}
 nbr_class <- rast(nbr_class) # Pasar a Terra
-writeRaster(nbr_class, "nbr_class_USGS.tiff")
+writeRaster(nbr_class, "_gis_rasters/nbr_class_USGS_wgs84.tiff")
 ```
        
        

@@ -21,7 +21,7 @@ directorio en la PC local.
 
 ``` r
 # Importar el raster 
-nbr_wgs84 <- rast(paste0("_rasters/dNBR_scaled_masked.tif")) 
+nbr_wgs84 <- rast(paste0("_gis_rasters/dNBR_scaled_masked.tif")) 
 
 # Proyectar a un sistema de coordenadas planas
 nbr_posgar1 <- terra::project(nbr_wgs84, "EPSG:22181")
@@ -85,7 +85,7 @@ Se puede **exportar el polígono** en formato shape para trabajar en
 forma local.
 
 ``` r
-st_write(perimeter_wgs84, "poligono_incendio_wgs84.shp", append = FALSE)
+st_write(perimeter_wgs84, "_gis_shapes/poligono_incendio_wgs84.shp", append = FALSE)
 ```
 
 ### **2b.Cálculo de la superficie total del incendio**
@@ -143,7 +143,7 @@ my_col=c("#ffffff",      # -1 NA Values
           "#a41fd6")      # 7 - High Severity
 ```
 
-Se clasifica el raster y grafica el raster dNBR:
+Se clasifica el raster dNBR en categorías y luego se grafica:
 
 ``` r
 nbr_class <- classify(nbr_wgs84_crop, class.matrix, right=NA)
@@ -188,7 +188,7 @@ trabajar en forma local.
 
 ``` r
 nbr_class <- rast(nbr_class) # Pasar a Terra
-writeRaster(nbr_class, "nbr_class_USGS.tiff")
+writeRaster(nbr_class, "_gis_rasters/nbr_class_USGS_wgs84.tiff")
 ```
 
 ### **2d.Cálculo de superficies por clases de severidad USGS**
@@ -254,8 +254,6 @@ colnames(Sups) <- c("Categoría", "Sup_ha")
 Sups <- Sups %>% 
   mutate(Percentage = Sup_ha/sum(Sup_ha)*100) %>% 
   mutate_if(is.numeric, ~round(., 2))
-
-Sups
 ```
 
     ##                  Categoría       Sup_ha Percentage

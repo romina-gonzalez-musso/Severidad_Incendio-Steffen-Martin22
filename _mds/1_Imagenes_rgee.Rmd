@@ -276,6 +276,7 @@ Primero se definen los parámetros del objeto `task` a descargar y luego con `ta
 Exportar el raster correspondiente al dNBR:
 
 ```{r eval=FALSE, include=TRUE}
+# Task para exportar el dNBR escalado a USGS en WGS84
 task <- ee$batch$Export$image$toDrive(
   image = dNBR_scaled,                  # Seleccionar qué producto se va a exportar
   description = "dNBR_scaled_masked",   # El nombre del archivo
