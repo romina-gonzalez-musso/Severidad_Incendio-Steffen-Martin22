@@ -32,8 +32,10 @@ Google Earth Engine (GEE) a través de la librería `rgee` en R.
     Severidad de
     Incendios)](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/1_Imagenes_rgee.md)
 
--   [**2.** Superficies afectadas por categoría de severidad
+-   [**2.** Obtención del perímetro del incendio y clasificación por
+    clases de severidad
     USGS](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/2_NBR.md)
 
--   [**3.** Superficies afectadas por tipo de
-    bosque](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/3_Tipos_ftales.md)
+-   [**3.** Superficies afectadas por tipo de bosque y clases de
+    severidad
+    USGS](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/3_Tipos_ftales.md)
