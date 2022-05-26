@@ -1,0 +1,189 @@
+---
+# title: "Relevamiento satelital de severidad del Incendio Complejo Lago Martin 2021-22"
+#author: "Romina Gonzalez Musso"
+# date: "8/4/2022"
+always_allow_html: true
+output:
+  github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## **3. ESTIMACIÓN DE SUPERFICIES AFECTADAS POR TIPO DE BOSQUE**
+
+### **3a. Importar las librerías e inputs necesarios**
+
+En esta sección se utilizará la [Clasificación de Tipos Forestales y Cobertura del Suelo de la Región Bosque Andino Patagónico (CIEFAP, MAyDS 2016)](https://www.argentina.gob.ar/sites/default/files/informe_final_ccs_bap_20160712.pdf), Nivel 2 de la Leyenda. También se utilizará el archivo raster correspondiente al dNBR generado en las secciones anteriores. 
+
+Indicar el **directorio local** donde se encuentran ambos archivos:
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+ 
+dir_ciefap <-"_gis_shapes/clasif_ciefap_incendio.shp"
+dir_nbr_class <- "_gis_rasters/nbr_class_USGS.tiff"
+
+```
+*Observación: en este caso la cobertura vectorial del Tipos Forestales ya fue recortada al área del incendio.*
+
+Se utilizarán también 3 **funciones generadas específicamente** para extraer las superficies afectadas para cada tipo forestal y luego graficar. 
+
+Las 3 funciones, `shapeUSGSxTipoFtal`, `supUSGSxTipoFtal` y `plotUSGS` se encuentran en el repositorio. 
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+ 
+# Llamar a las funciones
+source("_r_functions/USGSxTipoFtal_funciones.R")
+
+```
+
+
+Finalmente, cargar las **librerías** necesarias:
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+library(terra)
+library(sf)
+library(dplyr)
+library(raster)
+```
+
+
+### **3b. Bosques de Ciprés**
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+# Definir el tipo forestal
+x <- "Ci"
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = TRUE}
+# Aplicar la función que extrae los polígonos de Coihue
+Ci <- shapeUSGSxTipoFtal(x)
+# Función para calcular la superficie por clase de severidad
+supUSGSxTipoFtal(Ci)
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE, eval=FALSE}
+# Graficar
+plotUSGS(Ci)
+```
+
+```{r, echo=FALSE, out.width="90%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Ci.png?raw=true")
+```
+
+### **3c. Bosques de Coihue**
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+# Definir el tipo forestal
+x <- "Co"
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = TRUE}
+# Aplicar la función que extrae los polígonos de Coihue
+Co <- shapeUSGSxTipoFtal(x)
+# Función para calcular la superficie por clase de severidad
+supUSGSxTipoFtal(Co)
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE, eval=FALSE}
+# Graficar
+plotUSGS(Co)
+```
+
+```{r, echo=FALSE, out.width="90%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Co.png?raw=true")
+```
+
+
+### **3d. Bosques Mixtos**
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+# Definir el tipo forestal
+x <- "Mx"
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = TRUE}
+# Aplicar la función que extrae los polígonos de Coihue
+Mx <- shapeUSGSxTipoFtal(x)
+# Función para calcular la superficie por clase de severidad
+supUSGSxTipoFtal(Mx)
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE, eval=FALSE}
+# Graficar
+plotUSGS(Mx)
+```
+
+```{r, echo=FALSE, out.width="90%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Mx.png?raw=true")
+```
+
+### **3e. Bosques de Lenga**
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+# Definir el tipo forestal
+x <- "Le"
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = TRUE}
+# Aplicar la función que extrae los polígonos de Coihue
+Le <- shapeUSGSxTipoFtal(x)
+# Función para calcular la superficie por clase de severidad
+supUSGSxTipoFtal(Le)
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE, eval=FALSE}
+# Graficar
+plotUSGS(Le)
+```
+
+```{r, echo=FALSE, out.width="90%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Le.png?raw=true")
+```
+
+### **3f. Bosques de Ñire**
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+# Definir el tipo forestal
+x <- "Ñi"
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = TRUE}
+# Aplicar la función que extrae los polígonos de Coihue
+Ni <- shapeUSGSxTipoFtal(x)
+# Función para calcular la superficie por clase de severidad
+supUSGSxTipoFtal(Ni)
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE, eval=FALSE}
+# Graficar
+plotUSGS(Ni)
+```
+
+```{r, echo=FALSE, out.width="90%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Ni.png?raw=true")
+```
+
+### **3g. Arbustales nativos**
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
+# Definir el tipo forestal
+x <- "Arbu Na"
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = TRUE}
+# Aplicar la función que extrae los polígonos de Coihue
+Arb <- shapeUSGSxTipoFtal(x)
+# Función para calcular la superficie por clase de severidad
+supUSGSxTipoFtal(Arb)
+```
+
+```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE, eval=FALSE}
+# Graficar
+plotUSGS(Arb)
+```
+
+```{r, echo=FALSE, out.width="90%", fig.cap=""}
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_ArbuNa.png?raw=true")
+```
