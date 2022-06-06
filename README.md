@@ -39,3 +39,18 @@ Google Earth Engine (GEE) a través de la librería `rgee` en R.
 -   [**3.** Superficies afectadas por tipo de bosque y clases de
     severidad
     USGS](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/3_Tipos_ftales.md)
+
+#### **BIBLIOGRAFÍA**
+
+-   CIEFAP, MAyDS, 2016. Actualización de la Clasificación de Tipos
+    Forestales y Cobertura del Suelo de la Región Bosque Andino
+    Patagónico. Informe Final. [Acceso el
+    documento](https://www.argentina.gob.ar/sites/default/files/informe_final_ccs_bap_20160712.pdf)
+
+-   Parks S.A, Dillon G.K., Miller C. 2014. A new metric for quantifying
+    burn severity: the relativized burn ratio. Remote Sens. 6:
+    1827-1844. <https://doi.org/10.3390/rs6031827>
+
+-   Aybar C., Wu Q., Bautista L., Yali R., Barja A. 2020. rgee: An R
+    package for interacting with Google Earth Engine Journal of Open
+    Source Software <https://github.com/r-spatial/rgee/>
