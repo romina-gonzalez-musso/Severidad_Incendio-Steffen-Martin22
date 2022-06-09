@@ -1,5 +1,5 @@
 ---
-title: "Relevamiento satelital de severidad del Incendio Complejo Lago Martin 2021-22"
+title: "Relevamiento satelital de severidad del Incendio Steffen-Martin 2021-22"
 #author: "Romina Gonzalez Musso"
 # date: "8/4/2022"
 always_allow_html: true
@@ -32,6 +32,10 @@ knitr::include_graphics("_images/0_Logo.jpg")
 - Javier Grosfeld
 - Paula Presti
 - Marcelo Bari
+- Anabella Carp
+- Mariana Lípori
+- Roxana Giménez
+
 
 ----------------------------------------
 ### **ÍNDICE DE CONTENIDOS**

@@ -1,5 +1,4 @@
-Relevamiento satelital de severidad del Incendio Complejo Lago Martin
-2021-22
+Relevamiento satelital de severidad del Incendio Steffen-Martin 2021-22
 ================
 
 <img src="_images/0_Logo.jpg" width="30%" style="display: block; margin: auto auto auto 0;" />
@@ -19,6 +18,9 @@ Relevamiento satelital de severidad del Incendio Complejo Lago Martin
 -   Javier Grosfeld
 -   Paula Presti
 -   Marcelo Bari
+-   Anabella Carp
+-   Mariana Lípori
+-   Roxana Giménez
 
 ------------------------------------------------------------------------
 
