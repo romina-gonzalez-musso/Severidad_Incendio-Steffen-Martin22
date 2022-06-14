@@ -37,6 +37,9 @@ knitr::include_graphics("_images/0_Logo.jpg")
 - Roxana Giménez
 
 
+**Informe final** 
+(aún en revisión)
+
 ----------------------------------------
 ### **ÍNDICE DE CONTENIDOS**
 
@@ -52,8 +55,10 @@ Este repositorio contiene el material accesorio y los códigos para determinar e
 
 #### **BIBLIOGRAFÍA**
 
+- Aybar C., Wu Q., Bautista L., Yali R., Barja A. 2020. rgee: An R package for interacting with Google Earth Engine Journal of Open Source Software [https://github.com/r-spatial/rgee/](https://github.com/r-spatial/rgee/)
+
 - CIEFAP, MAyDS, 2016. Actualización de la Clasificación de Tipos Forestales y Cobertura del Suelo de la Región Bosque Andino Patagónico. Informe Final. [Acceso el documento](https://www.argentina.gob.ar/sites/default/files/informe_final_ccs_bap_20160712.pdf)
 
 - Parks S.A, Dillon G.K., Miller C. 2014. A new metric for quantifying burn severity: the relativized burn ratio. Remote Sens. 6: 1827-1844. [https://doi.org/10.3390/rs6031827](https://doi.org/10.3390/rs6031827)
 
-- Aybar C., Wu Q., Bautista L., Yali R., Barja A. 2020. rgee: An R package for interacting with Google Earth Engine Journal of Open Source Software [https://github.com/r-spatial/rgee/](https://github.com/r-spatial/rgee/)
+

@@ -22,6 +22,8 @@ Relevamiento satelital de severidad del Incendio Steffen-Martin 2021-22
 -   Mariana Lípori
 -   Roxana Giménez
 
+**Informe final** (aún en revisión)
+
 ------------------------------------------------------------------------
 
 ### **ÍNDICE DE CONTENIDOS**
@@ -44,6 +46,10 @@ Google Earth Engine (GEE) a través de la librería `rgee` en R.
 
 #### **BIBLIOGRAFÍA**
 
+-   Aybar C., Wu Q., Bautista L., Yali R., Barja A. 2020. rgee: An R
+    package for interacting with Google Earth Engine Journal of Open
+    Source Software <https://github.com/r-spatial/rgee/>
+
 -   CIEFAP, MAyDS, 2016. Actualización de la Clasificación de Tipos
     Forestales y Cobertura del Suelo de la Región Bosque Andino
     Patagónico. Informe Final. [Acceso el
@@ -52,7 +58,3 @@ Google Earth Engine (GEE) a través de la librería `rgee` en R.
 -   Parks S.A, Dillon G.K., Miller C. 2014. A new metric for quantifying
     burn severity: the relativized burn ratio. Remote Sens. 6:
     1827-1844. <https://doi.org/10.3390/rs6031827>
-
--   Aybar C., Wu Q., Bautista L., Yali R., Barja A. 2020. rgee: An R
-    package for interacting with Google Earth Engine Journal of Open
-    Source Software <https://github.com/r-spatial/rgee/>
