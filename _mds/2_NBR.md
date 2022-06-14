@@ -3,8 +3,9 @@
 
 En esta sección se priorizará el uso de la librería `terra` para la
 manipulación y análisis de datos espaciales, aunque también se
-utilizarán las librería `sf` y `terra` para procesos puntuales. En la
-manipulación de tablas y datos en general se trabajará con `dplyr`.
+utilizarán las librería `sf` y `raster` para algunas funciones
+específicas. En la manipulación de tablas y datos en general se
+trabajará con `dplyr`.
 
 ``` r
 library("terra")
@@ -16,15 +17,12 @@ library("raster")
 ### **2a. Obtener el perímetro del incendio**
 
 En primer lugar se importará el **archivo raster dNBR** que fue generado
-con `rgee`. Se asume que luego de exportado, fue descargado a un
-directorio en la PC local.
+con en la sección anterior `rgee`. Se asume que luego de exportado a
+Google Drive, fue descargado a un directorio en la PC local.
 
 ``` r
-# Importar el raster 
-nbr_wgs84 <- rast(paste0("_gis_rasters/dNBR_scaled_masked.tif")) 
-
-# Proyectar a un sistema de coordenadas planas
-nbr_posgar1 <- terra::project(nbr_wgs84, "EPSG:22181")
+# Importar el raster (SRC POSGAR FAJA 1)
+nbr_f1 <- rast("_gis_rasters/dNBR_scaled_masked_f1.tif") 
 ```
 
 Para obtener el perímetro, primero hay que definir un **umbral de
@@ -37,85 +35,129 @@ categorías propuestas por USGS.
 umbral <- 100
 
 # Clasificar área quemada vs. no quemada
-perimeter <- classify(nbr_wgs84, cbind(-Inf, umbral, NA))   # NA a valores entre -Inf y el umbral
-perimeter <- classify(perimeter, cbind(umbral, Inf, 1))     # 1 a valores mayores al umbral - Quemados
+burnedArea_rast <- classify(nbr_f1, cbind(-Inf, umbral, NA))        # Valores entre -Inf y el umbral = NA
+burnedArea_rast <- classify(burnedArea_rast, cbind(umbral, Inf, 1)) # Valores mayores al umbral = Quemados
 ```
 
 ``` r
 # Plot
 par(mfrow=c(1,2))    
-plot(nbr_wgs84, main = "NBR", col = grey.colors(15), legend = FALSE)
-plot(perimeter, main = "Área quemada", legend = FALSE, col = "red")
+plot(nbr_f1, main = "NBR", col = grey.colors(15), legend = FALSE)
+plot(burnedArea_rast, main = "Área quemada", legend = FALSE, col = "red")
 ```
 
-<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/2_NBRvsAreaQuemada.png?raw=true" width="90%" />
+<img src="https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/2_NBRvsAreaQuemada.png?raw=true" width="90%" />
 
-El raster clasificado se poligoniza:
+Se observa que quedan píxeles aislados clasificados como área quemada. A
+continuación se realizarán una serie de pasos a fin de **filtrar y
+obtener el perímetro final.**
+
+Primero, el raster clasificado se poligoniza.
 
 ``` r
-perimeter <- perimeter %>%
-  as.polygons(.) %>%    
-  st_as_sf(.) %>%       
+burnedArea_vect <- burnedArea_rast %>%
+  as.polygons(.) %>%    # Del paquete terra
+  st_as_sf(.) %>%       # Convertir a SF
   st_cast(.,"POLYGON")  # Multipolygon a Simpleparts
 ```
 
-Se selecciona el polígono de mayor tamaño que será el área del incendio.
+Se seleccionan los polígonos de mayor tamaño que representarán la mayor
+parte del área del incendio. En este caso, son dos polígonos.
 
 ``` r
-perimeter_f1 <- st_transform(perimeter, crs = 22181)
-
-perimeter_f1 <- perimeter_f1 %>%
-  mutate(area = st_area(perimeter_f1)) %>% 
-  slice_max(area)
-
-perimeter_wgs84 <- st_transform(perimeter_f1, crs = 4326)
+burnedArea_vect_max <- burnedArea_vect %>%
+  mutate(area = st_area(burnedArea_vect)) %>% 
+  slice_max(area, n = 2) # Seleccionar los dos polígonos de mayor tamaño
 ```
 
-Y finalmente se grafica para verificar
+Ahora se generará un **buffer** alrededor del estos dos polígonos
+principales, a fin de poder incluir como parte de la superficie quemada
+los polígonos más chicos.
 
 ``` r
 par(mfrow=c(1,1))
-plot(nbr_wgs84, col = grey.colors(10), legend = FALSE)
-plot(perimeter_wgs84$geometry, col = ("red4"), add = TRUE)
+buffer <- buffer(vect(burnedArea_vect_max), 600) #600 metros de buffer. Puede variar. 
 ```
 
-<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/2_Perimetro_poligono.png?raw=true" width="90%" />
+``` r
+# Graficar
+plot(burnedArea_rast, legend = FALSE)
+plot(buffer, add = TRUE)
+```
+
+<img src="https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/2_buffer.png?raw=true" width="90%" />
+
+Se seleccionarán todos los polígonos incluidos en el área buffer que
+corresponden a píxeles quemados.
+
+``` r
+# Seleccionar todos los polígonos (píxeles) quemados del área buffer de incendio
+perimeter_f1 <- terra::mask(burnedArea_rast, buffer) %>%
+  terra::crop(., buffer) %>%
+  as.polygons(.) %>%
+  st_as_sf(.) %>%    
+  st_cast(.,"POLYGON") 
+
+# Calcular la superficie de cada polígono
+perimeter_f1 <- perimeter_f1 %>%  
+  mutate(area = st_area(perimeter_f1))
+```
+
+Finalmente, se eliminarán los píxeles más pequeños que aún siguen
+generando ruido.
+
+``` r
+# Eliminar polígonos sueltos (ruido) < a 10.000m2 area
+perimeter_f1$sup <- as.numeric(perimeter_f1$area)
+perimeter_f1 <- subset(perimeter_f1, sup > 10000)
+```
+
+Se grafica para verificar los resultados:
+
+``` r
+# Graficar
+par(mfrow=c(1,1))
+plot(nbr_f1, col = grey.colors(10), legend = FALSE)
+plot(perimeter_f1$geometry, col = (col=rgb(1, 0, 0, 0.2)), add = TRUE)
+```
+
+<img src="https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/2_Perimetro_poligono_incendio.png?raw=true" width="90%" />
 
 Se puede **exportar el polígono** en formato shape para trabajar en
 forma local.
 
 ``` r
-st_write(perimeter_wgs84, "_gis_shapes/poligono_incendio_wgs84.shp", append = FALSE)
+writeVector(vect(perimeter_f1), "poligono_incendio_f1.shp")
 ```
 
-### **2b.Cálculo de la superficie total del incendio**
+### **2b. Cálculo de la superficie total del incendio**
 
 ``` r
 as.numeric(sum(perimeter_f1$area)/10000)
 ```
 
-    ## [1] "La superficie estimada del incendio es de 7711.003 hectáreas."
+    ## [1] "La superficie estimada del incendio es de 7860.36 hectáreas."
 
-### **2c.Clasificar el raster dNBR por clases de severidad USGS**
+### **2c. Clasificar el raster dNBR por clases de severidad USGS**
 
 Primero se recorta el área del incendio con `mask`y `crop` del paquete
 `terra`:
 
 ``` r
-nbr_wgs84_crop <- terra::mask(nbr_wgs84, vect(perimeter_wgs84)) %>%
-                  terra::crop(., vect(perimeter_wgs84))
+nbr_f1_crop <- terra::mask(nbr_f1, vect(perimeter_f1)) %>%
+                  terra::crop(., vect(perimeter_f1))
 ```
 
 ``` r
-plot(nbr_wgs84_crop, main = "dNBR recortado al área incendio") 
+plot(nbr_f1_crop, main = "dNBR recortado al área incendio", legend = FALSE) 
 ```
 
-<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/2_dNBR_croped.png?raw=true" width="90%" />
+<img src="https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/2_dNBR_croped.png?raw=true" width="90%" />
 
 Luego se establecen los rangos de clasificación del raster en función a
 las categorías USGS y la paleta de colores:
 
-<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/1_classes.png?raw=true" width="100%" />
+<img src="https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/1_classes.png?raw=true" width="100%" />
 
 ``` r
 # Rangos de clasificación de Severidad USGS
@@ -146,15 +188,15 @@ my_col=c("#ffffff",      # -1 NA Values
 Se clasifica el raster dNBR en categorías y luego se grafica:
 
 ``` r
-nbr_class <- classify(nbr_wgs84_crop, class.matrix, right=NA)
+nbr_class <- classify(nbr_f1_crop, class.matrix, right=NA)
 ```
 
 ``` r
-plot(nbr_wgs84, col = grey.colors(10), legend = FALSE, main = "Severidad - Rangos USGS")
-plot(nbr_class,col = my_col, add = TRUE, legend = FALSE)
+plot(nbr_f1_crop, col = grey.colors(10), legend = FALSE, main = "Severidad - Rangos USGS")
+plot(nbr_class, col = my_col, add = TRUE, legend = FALSE)
 ```
 
-<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/2_Severidad.png?raw=true" width="90%" />
+<img src="https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/2_Severidad.png?raw=true" width="90%" />
 
 Se puede construir una *Tabla de Atributos Raster* (RAT, por sus siglas
 en inglés) para mejor representación de los resultados.
@@ -181,17 +223,17 @@ legend("right", inset = c(-0.55,0), legend =rat$legend, xpd = TRUE,
        horiz = FALSE, fill = my_col, cex = 0.75)
 ```
 
-<img src="https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/2_Severidad_clases.png?raw=true" width="90%" />
+<img src="https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/2_Severidad_clases.png?raw=true" width="90%" />
 
 Se puede **exportar el raster clasificado** en formato `.tiff` para
 trabajar en forma local.
 
 ``` r
 nbr_class <- rast(nbr_class) # Pasar a Terra
-writeRaster(nbr_class, "_gis_rasters/nbr_class_USGS_wgs84.tiff")
+writeRaster(nbr_class, "_gis_rasters/nbr_class_USGS_f1.tiff")
 ```
 
-### **2d.Cálculo de superficies por clases de severidad USGS**
+### **2d. Cálculo de superficies por clases de severidad USGS**
 
 Los pasos para generar la tabla de superficies por clases de severidad
 son:
@@ -238,9 +280,9 @@ as.numeric(sum(perimeter_f1$area)/10000)
 sum(class_usgs_f1$area_ha)
 ```
 
-    ## [1] "Superficie estimada del incendio con el polígono vectorial es de 7711 ha."
+    ## [1] "Superficie estimada del incendio con el polígono vectorial es de 7860.4 ha."
 
-    ## [1] "La superficie de estimada a partir de la sumatoria de clases de severidad es de 7717.2ha"
+    ## [1] "La superficie de estimada a partir de la sumatoria de clases de severidad es de 7869.3ha"
 
 ### **2e. Tabla de superficies por clases de severidad USGS**
 
@@ -257,7 +299,7 @@ Sups <- Sups %>%
 ```
 
     ##                  Categoría       Sup_ha Percentage
-    ## 1           4-Low Severity 1289.32 [ha]  16.71 [1]
-    ## 2  5-Moderate-low Severity 1452.53 [ha]  18.82 [1]
-    ## 3 6-Moderate-high Severity 1419.73 [ha]  18.40 [1]
-    ## 4          7-High Severity 3555.65 [ha]  46.07 [1]
+    ## 1           4-Low Severity 1399.72 [ha]  17.79 [1]
+    ## 2  5-Moderate-low Severity 1541.44 [ha]  19.59 [1]
+    ## 3 6-Moderate-high Severity 1414.24 [ha]  17.97 [1]
+    ## 4          7-High Severity 3513.88 [ha]  44.65 [1]

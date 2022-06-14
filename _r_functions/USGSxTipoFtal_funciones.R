@@ -17,8 +17,9 @@ shapeUSGSxTipoFtal <- function(x){
   # Poligonizar la clasificación
   forest_usgs <- forest_usgs %>%
     as.polygons(.) %>%         # Del paquete terra
-    st_as_sf(.) %>%            # Convertir a SF
-    st_cast(.,"POLYGON") 
+    st_as_sf(.)             
+    
+    # Convertir a SF %>% st_cast(.,"POLYGON") 
   
   # Agregar la columna de superficie en m2
   forest_usgs  <- forest_usgs  %>% 

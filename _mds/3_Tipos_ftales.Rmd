@@ -22,7 +22,7 @@ Indicar el **directorio local** donde se encuentran ambos archivos:
 ```{r, message=FALSE, warning=FALSE, include=TRUE, paged.print=FALSE, results = FALSE}
  
 dir_ciefap <-"_gis_shapes/clasif_ciefap_incendio.shp"
-dir_nbr_class <- "_gis_rasters/nbr_class_USGS.tiff"
+dir_nbr_class <- "_gis_rasters/nbr_class_USGS_f1.tiff"
 
 ```
 *Observación: en este caso la cobertura vectorial del Tipos Forestales ya fue recortada al área del incendio.*
@@ -69,7 +69,7 @@ plotUSGS(Ci)
 ```
 
 ```{r, echo=FALSE, out.width="90%", fig.cap=""}
-knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Ci.png?raw=true")
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/3_Ci_2.png?raw=true")
 ```
 
 ### **3c. Bosques de Coihue**
@@ -92,7 +92,7 @@ plotUSGS(Co)
 ```
 
 ```{r, echo=FALSE, out.width="90%", fig.cap=""}
-knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Co.png?raw=true")
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/3_Co_2.png?raw=true")
 ```
 
 
@@ -116,7 +116,7 @@ plotUSGS(Mx)
 ```
 
 ```{r, echo=FALSE, out.width="90%", fig.cap=""}
-knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Mx.png?raw=true")
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/3_Mx_2.png?raw=true")
 ```
 
 ### **3e. Bosques de Lenga**
@@ -139,7 +139,7 @@ plotUSGS(Le)
 ```
 
 ```{r, echo=FALSE, out.width="90%", fig.cap=""}
-knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Le.png?raw=true")
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/3_Le_2.png?raw=true")
 ```
 
 ### **3f. Bosques de Ñire**
@@ -162,7 +162,7 @@ plotUSGS(Ni)
 ```
 
 ```{r, echo=FALSE, out.width="90%", fig.cap=""}
-knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_Ni.png?raw=true")
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/3_Ni_2.png?raw=true")
 ```
 
 ### **3g. Arbustales nativos**
@@ -185,5 +185,5 @@ plotUSGS(Arb)
 ```
 
 ```{r, echo=FALSE, out.width="90%", fig.cap=""}
-knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/blob/master/_images/3_ArbuNa.png?raw=true")
+knitr::include_graphics("https://github.com/romina-gonzalez-musso/Severidad_Incendio-Steffen-Martin22/blob/master/_images/3_ArbuNa_2.png?raw=true")
 ```
