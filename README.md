@@ -1,20 +1,17 @@
 
-<img src="_images/Portada_1.png" width="60%" style="display: block; margin: auto;" />
+<img src="_images/Portada_1.png" width="70%" style="display: block; margin: auto;" />
 
-<img src="_images/Portada_2.png" width="40%" style="display: block; margin: auto;" />
-
-<img src="_images/Portada_3.png" width="60%" style="display: block; margin: auto;" />
+<img src="_images/Portada_3.png" width="70%" style="display: block; margin: auto;" />
 
 ------------------------------------------------------------------------
 
 ### **ÍNDICE DE CONTENIDOS**
 
-Para garantizar la reproducibilidad de los resultados publicados en el
-Informe y proponer un protocolo estandarizado para relevar
-satelitalmente severidad ante futuros eventos de incendio, este
-repositorio contiene el material los códigos para determinar el índice
-de severidad de incendios y los cálculos de superficies usando Google
-Earth Engine (GEE) a través de la librería `rgee` en R.
+Este repositorio contiene el material accesorio y los códigos para
+determinar el índice de severidad de incendios y los cálculos de
+superficies afectadas usando Google Earth Engine (GEE) a través de la
+librería `rgee` en R, de acuerdo a la metodología detallada en el
+Informe Técnico.
 
 -   [**1.** Obtención de imágenes con `rgee` y cáculo de NBR (Índice de
     Severidad de
