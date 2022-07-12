@@ -1,36 +1,20 @@
-Relevamiento satelital de severidad del Incendio Steffen-Martin 2021-22
-================
 
-<img src="_images/0_Logo.jpg" width="30%" style="display: block; margin: auto auto auto 0;" />
+<img src="_images/Portada_1.png" width="60%" style="display: block; margin: auto;" />
 
-### **Servicio Técnico de Alto Nivel (STAN)**
+<img src="_images/Portada_2.png" width="40%" style="display: block; margin: auto;" />
 
-**INIBIOMA-CONICET/ UNComahue**
-
--   Thomas Kitzberger
--   Juan Paritsis
--   Juan Gowda
--   Romina Gonzalez Musso
--   Florencia Tiribelli
-
-**Administración de Parques Nacionales**
-
--   Javier Grosfeld
--   Paula Presti
--   Marcelo Bari
--   Anabella Carp
--   Mariana Lípori
--   Roxana Giménez
-
-**Informe final** (aún en revisión)
+<img src="_images/Portada_3.png" width="60%" style="display: block; margin: auto;" />
 
 ------------------------------------------------------------------------
 
 ### **ÍNDICE DE CONTENIDOS**
 
-Este repositorio contiene el material accesorio y los códigos para
-determinar el índice de severidad de incendios y superficies usando
-Google Earth Engine (GEE) a través de la librería `rgee` en R.
+Para garantizar la reproducibilidad de los resultados publicados en el
+Informe y proponer un protocolo estandarizado para relevar
+satelitalmente severidad ante futuros eventos de incendio, este
+repositorio contiene el material los códigos para determinar el índice
+de severidad de incendios y los cálculos de superficies usando Google
+Earth Engine (GEE) a través de la librería `rgee` en R.
 
 -   [**1.** Obtención de imágenes con `rgee` y cáculo de NBR (Índice de
     Severidad de
