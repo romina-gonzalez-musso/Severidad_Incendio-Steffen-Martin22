@@ -35,7 +35,12 @@ Este repositorio contiene el material accesorio y los códigos para determinar e
 - [**3.** Superficies afectadas por tipo de bosque y clases de severidad USGS ](https://github.com/romina-gonzalez-musso/Severidad_IncendioLagoMartin/tree/master/_mds/3_Tipos_ftales.md)
 
 
-#### **BIBLIOGRAFÍA**
+#### **CITA**
+
+- [Kitzberger T., Paritsis J., Gowda J., Gonzalez Musso R., Tiribelli F., Grosfeld J., Presti P., Bari M., Carp A., Giménez R., Lípori M. 2023. Relevamiento satelital de severidad y estimaciones de trayectorias sucesionales de bosques afectados por el Incendio Steffen‐Martin 2021‐22, Parque Nacional Nahuel Huapi. Macroscopía: divulgación ténico científica del patrimonio natural y cultural del Parque Nacional Nahuel Huapí. Vol. 11: p8‐14.](https://www.nahuelhuapi.gov.ar/multimedios/macroscopia_11.pdf)
+
+
+#### **BIBLIOGRAFÍA MENCIONADA EN EL REPOSITORIO**
 
 - Aybar C., Wu Q., Bautista L., Yali R., Barja A. 2020. rgee: An R package for interacting with Google Earth Engine Journal of Open Source Software [https://github.com/r-spatial/rgee/](https://github.com/r-spatial/rgee/)
 
